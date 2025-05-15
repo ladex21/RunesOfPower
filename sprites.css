@@ -1,0 +1,189 @@
+/* sprites.css - Styles specifically for character and monster sprites */
+
+/* General Sprite Image Properties */
+.sprite-image {
+    display: block; 
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+    object-fit: contain; 
+    width: 100%; 
+    height: 100%; 
+}
+
+/* Player Avatar Container */
+#player-avatar-area {
+    width: 120px; 
+    height: 120px; 
+    padding: 5px; 
+    margin-bottom: 10px;
+    border-radius: var(--border-radius-small);
+    background-color: var(--color-bg-dark); 
+    border: 2px dashed var(--color-border-highlight);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; 
+    position: relative; /* Added to make position context for animations */
+}
+
+/* Player Avatar Image (styled by .sprite-image) */
+#player-avatar {
+    border-radius: var(--border-radius-small); 
+    transition: transform 0.3s ease, filter 0.3s ease; /* Smooth animation transitions */
+}
+
+/* Monster Sprite Container */
+#monster-sprite-area {
+    width: 100%; 
+    max-width: 260px; 
+    min-height: 200px; 
+    max-height: 260px; 
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: var(--border-radius-small);
+    background-color: var(--color-bg-dark);
+    border: 2px dashed var(--color-border-highlight);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative; /* Added for animation positioning */
+}
+
+/* Monster Sprite Image (styled by .sprite-image) */
+#monster-sprite {
+    transition: transform 0.3s ease, filter 0.3s ease; /* Smooth animation transitions */
+}
+
+/* Rune Icon Images in Rune Selection Buttons */
+.rune-button .rune-icon {
+    /* .sprite-image class is applied directly to these <img> tags in HTML */
+    /* Container for these icons is styled in style.css */
+    transition: transform 0.2s ease, filter 0.2s ease; /* Added for hover effects */
+}
+
+/* Element type icons */
+.element-type-icon {
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-right: 5px;
+    position: relative;
+}
+
+/* Animation classes for combat effects */
+.sprite-attack {
+    animation: attackAnimation 0.4s steps(3);
+}
+
+@keyframes attackAnimation {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-10px) rotate(-5deg); }
+    50% { transform: translateX(0) rotate(0deg); }
+    75% { transform: translateX(10px) rotate(5deg); }
+    100% { transform: translateX(0); }
+}
+
+.sprite-hit {
+    animation: hitAnimation 0.3s;
+}
+
+@keyframes hitAnimation {
+    0% { opacity: 1; }
+    30% { opacity: 0.4; }
+    60% { opacity: 1; }
+    100% { opacity: 1; }
+}
+
+.sprite-cast {
+    animation: castAnimation 0.6s;
+}
+
+@keyframes castAnimation {
+    0% { filter: brightness(1); }
+    50% { filter: brightness(1.5); }
+    100% { filter: brightness(1); }
+}
+
+/* Enhanced damage animation */
+.damage-animation {
+    animation: damageShake 0.5s ease;
+}
+
+@keyframes damageShake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-7px) rotate(-3deg); }
+    40% { transform: translateX(7px) rotate(3deg); }
+    60% { transform: translateX(-7px) rotate(-3deg); }
+    80% { transform: translateX(5px) rotate(2deg); }
+}
+
+/* Enhanced heal animation */
+.heal-animation {
+    animation: healPulse 0.8s ease;
+}
+
+@keyframes healPulse {
+    0%, 100% { transform: scale(1); filter: brightness(1); }
+    50% { transform: scale(1.08); filter: brightness(1.3) hue-rotate(15deg); }
+}
+
+/* Enhanced buff animation */
+.buff-animation {
+    animation: buffFlash 0.8s ease;
+}
+
+@keyframes buffFlash {
+    0%, 100% { filter: brightness(1); }
+    25% { filter: brightness(1.5) saturate(1.5); }
+    50% { transform: scale(1.05); filter: brightness(1.3) contrast(1.2); }
+    75% { filter: brightness(1.5) saturate(1.5); }
+}
+
+/* Status effect indicators */
+.status-effect-indicator {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    z-index: 5;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+}
+
+.buff-indicator {
+    background-color: var(--color-accent-green);
+    color: #000;
+}
+
+.debuff-indicator {
+    background-color: var(--color-accent-red);
+    color: #fff;
+}
+
+/* Floating combat text */
+.floating-text {
+    position: absolute;
+    animation: floatingText 1.5s forwards;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px #000, -1px -1px 2px #000, 1px -1px 2px #000, -1px 1px 2px #000;
+    pointer-events: none;
+    z-index: 10;
+}
+
+@keyframes floatingText {
+    0% { opacity: 0; transform: translateY(0); }
+    10% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(-30px); }
+}

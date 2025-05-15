@@ -1,0 +1,1758 @@
+
+/* --- Global Styles & Variables --- */
+:root {
+    --font-primary: 'Press Start 2P', cursive;
+    --color-bg-dark: #1a1a2e;
+    --color-bg-panel: #24243e;
+    --color-bg-panel-deep: #1e1e36;
+    --color-border-panel: #4a4a6a;
+    --color-border-highlight: #6a6a8a;
+    --color-text-light: #e0e0e0;
+    --color-text-medium: #bdc3c7;
+    --color-text-dark: #8e8e9e;
+    --color-accent-gold: #f9a825;
+    --color-accent-red: #e74c3c;
+    --color-accent-blue: #3498db;
+    --color-accent-green: #2ecc71;
+    --color-accent-light: #FFFACD; 
+    --color-text-light-rune: #333333; 
+    --color-accent-dark: #6A0DAD;  
+    --color-text-dark-rune: #FFFFFF; 
+    --color-accent-exp: #f1c40f;
+    --color-accent-rune-swap: #9b59b6;
+    --color-accent-inventory: #d4ac0d;
+    --color-error-bg: #ffdddd;
+    --color-error-text: #D8000C;
+    --color-success-text: #4F8A10;
+    --color-warning-text: #9F6000;
+    --color-event-text: #50299c;
+    --color-event-critical-text: #ff4d4d; 
+    --color-combat-player-text: var(--color-accent-blue);
+    --color-combat-monster-text: var(--color-accent-red);
+    --color-combat-info-text: var(--color-text-medium);
+    --color-system-text: var(--color-accent-gold);
+    --color-mana-regen: #82EEFD;
+
+    --shadow-light: 0 2px 4px rgba(0,0,0,0.3);
+    --shadow-medium: 0 4px 8px rgba(0,0,0,0.4);
+    --shadow-strong: 3px 3px 0px #000000aa, 6px 6px 0px #00000055;
+
+    --border-radius-small: 4px;
+    --border-radius-medium: 8px;
+    --border-radius-large: 12px;
+
+    --stat-bar-height: 26px;
+}
+
+/* Basic Reset & Body Styling */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: var(--font-primary);
+    background-color: var(--color-bg-dark);
+    color: var(--color-text-light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 10px;
+    overflow-x: hidden;
+    line-height: 1.4;
+}
+
+/* --- Screen Management --- */
+.screen { 
+    display: none; 
+    width: 100%; 
+    max-width: 1200px; 
+    background-color: var(--color-bg-panel); 
+    border: 4px solid var(--color-border-panel); 
+    border-radius: var(--border-radius-large); 
+    box-shadow: var(--shadow-strong); 
+    padding: 20px; 
+}
+.screen.active {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#game-screen .screen-content-wrapper {
+    width: 100%;
+    max-width: 1200px;
+}
+
+/* Section Titles */
+.section-title {
+    font-size: 0.9em;
+    color: var(--color-accent-gold);
+    margin-bottom: 10px;
+    text-align: center;
+    padding-bottom: 5px;
+    border-bottom: 1px dashed var(--color-border-highlight);
+}
+/* --- Rune Selection Screen --- */
+#rune-selection-screen .game-title { 
+    color: var(--color-accent-gold); 
+    font-size: clamp(1.5em, 4vw, 2.2em); 
+    margin-bottom: 10px; 
+    text-shadow: 2px 2px #000; 
+    text-align: center; 
+}
+.game-subtitle {
+    color: var(--color-text-medium);
+    font-size: clamp(0.9em, 2vw, 1.1em);
+    margin-bottom: 30px;
+    text-align: center;
+}
+.rune-options { 
+    display: flex; 
+    justify-content: space-around; 
+    align-items: stretch; 
+    flex-wrap: wrap; 
+    gap: 25px; 
+    margin: 30px 0; 
+    width: 100%; 
+    max-width: 800px; 
+}
+.rune-button { 
+    background-color: var(--color-bg-panel-deep); 
+    color: var(--color-text-light); 
+    border: 3px solid var(--color-border-highlight); 
+    padding: 20px 15px; 
+    border-radius: var(--border-radius-medium); 
+    cursor: pointer; 
+    font-family: var(--font-primary); 
+    font-size: clamp(0.9em, 2.5vw, 1.1em); 
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, background-color 0.2s; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    text-align: center; 
+    min-width: 160px; 
+    flex: 1 1 160px; 
+    max-width: 200px; 
+    box-shadow: var(--shadow-medium); 
+}
+.rune-button:hover { 
+    transform: translateY(-5px) scale(1.03); 
+    box-shadow: 0 8px 15px rgba(0,0,0,0.5); 
+}
+.rune-button:active { 
+    transform: translateY(-2px) scale(1.01); 
+}
+.rune-button .rune-icon { 
+    width: 80px; 
+    height: 80px; 
+    margin-bottom: 15px; 
+    border: 2px solid var(--color-border-panel); 
+    border-radius: var(--border-radius-small); 
+    background-color: var(--color-bg-dark); 
+    padding: 2px; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+}
+.rune-button .rune-name { 
+    display: block; 
+    margin-top: 5px; 
+    font-weight: bold;
+}
+.rune-button .rune-desc {
+    display: block;
+    font-size: 0.7em;
+    color: var(--color-text-medium);
+    margin-top: 5px;
+}
+.fire-rune { 
+    border-color: var(--color-accent-red); 
+}
+.fire-rune:hover { 
+    background-color: var(--color-accent-red); 
+    border-color: #ff8370; 
+}
+.water-rune { 
+    border-color: var(--color-accent-blue); 
+}
+.water-rune:hover { 
+    background-color: var(--color-accent-blue); 
+    border-color: #5dade2; 
+}
+.nature-rune { 
+    border-color: var(--color-accent-green); 
+}
+.nature-rune:hover { 
+    background-color: var(--color-accent-green); 
+    border-color: #58d68d; 
+}
+.light-rune { 
+    border-color: var(--color-accent-light); 
+    color: var(--color-text-light-rune); 
+    background-color: #f0e68c; 
+}
+.light-rune:hover { 
+    background-color: var(--color-accent-light); 
+    border-color: #f5efbc; 
+    box-shadow: 0 0 15px var(--color-accent-light); 
+}
+.light-rune .rune-icon { 
+    border-color: var(--color-text-light-rune); 
+}
+.dark-rune { 
+    border-color: var(--color-accent-dark); 
+    color: var(--color-text-dark-rune); 
+    background-color: #3B0062; 
+}
+.dark-rune:hover { 
+    background-color: var(--color-accent-dark); 
+    border-color: #8e44ad; 
+    box-shadow: 0 0 15px var(--color-accent-dark); 
+}
+.dark-rune .rune-icon { 
+    border-color: var(--color-text-dark-rune); 
+}
+
+.instructions { 
+    font-size: clamp(0.8em, 2vw, 1em); 
+    color: var(--color-text-medium); 
+    margin-top: 20px; 
+    text-align: center; 
+}
+/* --- Main Game Screen --- */
+#top-bar { 
+    background-color: var(--color-bg-panel-deep); 
+    padding: 10px 15px; 
+    border-radius: var(--border-radius-medium); 
+    margin-bottom: 20px; 
+    border: 2px solid var(--color-border-panel); 
+    width: 100%; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    font-size: clamp(0.8em, 2vw, 0.9em); 
+}
+#game-logo-area { 
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+}
+.game-title-small { 
+    color: var(--color-accent-gold); 
+    font-size: clamp(1em, 2.5vw, 1.2em); 
+}
+#player-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.info-badge {
+    padding: 5px 8px;
+    border-radius: var(--border-radius-small);
+    background-color: var(--color-bg-dark);
+    font-size: 0.85em;
+}
+.rune-badge {
+    border-left: 3px solid var(--color-accent-gold);
+}
+.level-badge {
+    border-left: 3px solid var(--color-accent-green);
+}
+.gold-badge {
+    border-left: 3px solid var(--color-accent-gold);
+}
+
+#main-content-area { 
+    display: flex; 
+    gap: 15px; 
+    margin-bottom: 20px; 
+    width: 100%; 
+    flex-wrap: wrap; 
+}
+#left-panel, #center-panel, #right-panel { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 15px; 
+    flex-basis: 100%; 
+}
+
+@media (min-width: 768px) { 
+    #main-content-area { 
+        flex-wrap: nowrap; 
+    } 
+    #left-panel { 
+        flex-basis: 28%; 
+        order: 1; 
+    } 
+    #center-panel { 
+        flex-basis: 44%; 
+        order: 2; 
+    } 
+    #right-panel { 
+        flex-basis: 28%; 
+        order: 3; 
+    } 
+}
+
+.character-box, .stats-box { 
+    background-color: var(--color-bg-panel-deep); 
+    padding: 15px; 
+    border-radius: var(--border-radius-medium); 
+    border: 2px solid var(--color-border-panel); 
+    box-shadow: var(--shadow-light); 
+}
+.character-box { 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+}
+.stats-box h3, .stats-box h4 { 
+    margin-top: 0; 
+    margin-bottom: 15px; 
+    color: var(--color-accent-gold); 
+    font-size: clamp(1em, 2.5vw, 1.2em); 
+    text-align: center; 
+    text-shadow: 1px 1px #000; 
+    padding-bottom: 5px; 
+    border-bottom: 1px dashed var(--color-border-highlight); 
+}
+.character-name { 
+    font-size: clamp(1.1em, 3vw, 1.4em) !important; 
+    color: var(--color-text-light) !important; 
+    border-bottom: none !important; 
+    margin-bottom: 10px !important; 
+}
+
+/* Monster Details */
+.monster-details {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.monster-type-line, .monster-level-line {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Battle Info Section */
+.battle-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.battle-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px 10px;
+    background-color: rgba(0,0,0,0.2);
+    border-radius: var(--border-radius-small);
+}
+.battle-stat-label {
+    font-size: 0.7em;
+    color: var(--color-text-medium);
+}
+.battle-stat-value {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: var(--color-text-light);
+}
+/* --- Stat Bars and Values --- */
+.basic-stat-line {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 10px;
+    font-size: 0.8em;
+    background-color: rgba(0,0,0,0.15);
+    padding: 5px;
+    border-radius: var(--border-radius-small);
+}
+
+.stat-label-small {
+    color: var(--color-text-medium);
+    font-weight: bold;
+}
+
+.stat-value-small {
+    color: var(--color-text-light);
+    font-weight: bold;
+}
+
+.stat-bar-container { 
+    display: flex; 
+    align-items: center; 
+    margin-bottom: 12px; 
+    font-size: clamp(0.8em, 2vw, 0.9em); 
+}
+.stat-label { 
+    width: 35px; 
+    color: var(--color-text-medium); 
+    flex-shrink: 0; 
+    font-weight: bold; 
+    text-transform: uppercase; 
+}
+.stat-bar { 
+    flex-grow: 1; 
+    height: var(--stat-bar-height); 
+    background-color: #121222; 
+    border: 1px solid var(--color-border-highlight); 
+    border-radius: var(--border-radius-small); 
+    margin: 0 8px; 
+    overflow: hidden; 
+    position: relative; 
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.5); 
+}
+.stat-fill { 
+    height: 100%; 
+    width: 100%; 
+    transition: width 0.4s ease-in-out; 
+    border-radius: 2px; 
+    position: relative; 
+}
+.stat-fill::after { 
+    content: ''; 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 50%; 
+    background: linear-gradient(to bottom, rgba(255,255,255,0.2), rgba(255,255,255,0)); 
+}
+.hp-bar .stat-fill { 
+    background-color: var(--color-accent-red); 
+}
+.mana-bar .stat-fill { 
+    background-color: var(--color-accent-blue); 
+}
+.exp-bar { 
+    height: calc(var(--stat-bar-height) * 0.8); 
+}
+.exp-bar .stat-fill { 
+    background-color: var(--color-accent-exp); 
+}
+.stat-value { 
+    min-width: 70px; 
+    text-align: right; 
+    color: var(--color-text-light); 
+    flex-shrink: 0; 
+}
+.stat-line { 
+    display: flex; 
+    justify-content: space-between; 
+    padding: 3px 0; 
+    font-size: clamp(0.85em, 2.2vw, 0.95em); 
+    margin-bottom: 5px; 
+}
+.stat-line .stat-label { 
+    width: auto; 
+    margin-right: 10px; 
+}
+.stat-value-strong { 
+    font-weight: bold; 
+    color: var(--color-text-light); 
+}
+/* --- Status Effects --- */
+.status-effects-area { 
+    min-height: 30px; 
+    padding: 5px; 
+    margin-top: 5px; 
+    border-radius: var(--border-radius-small); 
+    background-color: rgba(0,0,0,0.1); 
+    display: flex; 
+    gap: 5px; 
+    flex-wrap: wrap; 
+    align-items: center; 
+    justify-content: center; 
+}
+.status-effect { 
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 8px;
+    margin: 2px;
+    border-radius: var(--border-radius-small);
+    font-size: 0.7em;
+    white-space: nowrap;
+}
+.status-effect-icon {
+    margin-right: 4px;
+    font-size: 1.2em;
+}
+.status-effect.buff { 
+    background-color: var(--color-accent-green); 
+    color: #003300;
+}
+.status-effect.debuff { 
+    background-color: var(--color-accent-red); 
+    color: #330000;
+}
+.status-effect.neutral { 
+    background-color: var(--color-text-dark); 
+}
+.status-effect.condition {
+    background-color: var(--color-accent-blue);
+    color: #000033;
+}
+
+/* --- Mastery Progress Display --- */
+#mastery-overview {
+    padding: 10px;
+}
+#mastery-progress-display {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.mastery-info {
+    font-size: 0.8em;
+    text-align: center;
+    color: var(--color-text-medium);
+}
+.skill-mastery-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.75em;
+}
+.skill-mastery-name {
+    color: var(--color-text-light);
+    width: 70px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.skill-mastery-progress {
+    flex-grow: 1;
+    height: 6px;
+    background-color: rgba(0,0,0,0.3);
+    border-radius: 3px;
+    overflow: hidden;
+}
+.skill-mastery-fill {
+    height: 100%;
+    background-color: var(--color-accent-gold);
+    transition: width 0.3s ease-out;
+}
+.skill-mastery-value {
+    color: var(--color-text-medium);
+    min-width: 35px;
+    text-align: right;
+}
+.skill-mastered .skill-mastery-fill {
+    background-color: var(--color-accent-green);
+}
+.skill-mastered .skill-mastery-name {
+    color: var(--color-accent-green);
+}
+
+/* --- Game Log --- */
+#game-log-container { 
+    flex-grow: 1; 
+    display: flex; 
+    flex-direction: column; 
+}
+#game-log { 
+    flex-grow: 1; 
+    min-height: 150px; 
+    max-height: 300px; 
+    overflow-y: auto; 
+    background-color: #121222; 
+    border: 1px solid var(--color-border-highlight); 
+    border-radius: var(--border-radius-small); 
+    padding: 10px; 
+    font-size: clamp(0.75em, 1.8vw, 0.85em); 
+    line-height: 1.5; 
+}
+#game-log p { 
+    margin: 0 0 6px 0; 
+    word-break: break-word; 
+}
+#game-log p:last-child { 
+    margin-bottom: 0; 
+}
+.log-message.log-system { 
+    color: var(--color-system-text); 
+    font-style: italic; 
+}
+.log-message.log-success { 
+    color: var(--color-success-text); 
+}
+.log-message.log-error { 
+    color: var(--color-error-text); 
+    font-weight: bold; 
+}
+.log-message.log-warning { 
+    color: var(--color-warning-text); 
+}
+.log-message.log-event { 
+    color: var(--color-event-text); 
+    font-weight: bold; 
+}
+.log-message.log-event-critical { 
+    color: var(--color-event-critical-text); 
+    font-weight: bold; 
+    text-shadow: 1px 1px #000; 
+}
+.log-message.log-combat-player { 
+    color: var(--color-combat-player-text); 
+}
+.log-message.log-combat-monster { 
+    color: var(--color-combat-monster-text); 
+}
+.log-message.log-combat-info { 
+    color: var(--color-combat-info-text); 
+}
+.log-message.log-mana-regen { 
+    color: var(--color-mana-regen); 
+}
+/* --- Action Buttons --- */
+#combat-actions-container { 
+    background-color: var(--color-bg-panel-deep); 
+    padding: 15px; 
+    border-radius: var(--border-radius-medium); 
+    margin-top: 20px; 
+    border: 2px solid var(--color-border-panel); 
+    width: 100%; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    flex-wrap: wrap; 
+    gap: 15px; 
+}
+#skill-buttons-area { 
+    display: flex; 
+    gap: 10px; 
+    flex-wrap: wrap; 
+    justify-content: center; 
+    flex-grow: 1; 
+}
+#other-actions-area { 
+    display: flex; 
+    gap: 10px; 
+    justify-content: center; 
+    flex-shrink: 0; 
+}
+
+.action-button { 
+    background-color: var(--color-border-panel); 
+    color: var(--color-text-light); 
+    border: 2px solid var(--color-border-highlight); 
+    padding: 10px 15px; 
+    border-radius: var(--border-radius-medium); 
+    cursor: pointer; 
+    font-family: var(--font-primary); 
+    font-size: clamp(0.8em, 2vw, 0.9em); 
+    transition: all 0.2s ease-out; 
+    box-shadow: 2px 2px 0px #00000088, 4px 4px 0px #00000044; 
+    text-align: center; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    gap: 8px; 
+}
+.action-button:hover:not(:disabled) { 
+    background-color: var(--color-border-highlight); 
+    transform: translateY(-2px) translateX(-1px); 
+    box-shadow: 3px 3px 0px #000000aa, 6px 6px 0px #00000055; 
+}
+.action-button:active:not(:disabled) { 
+    transform: translateY(1px) translateX(0px); 
+    box-shadow: 1px 1px 0px #00000088, 2px 2px 0px #00000044; 
+}
+.action-button:disabled { 
+    background-color: #333; 
+    color: #777; 
+    cursor: not-allowed; 
+    border-color: #555; 
+    box-shadow: inset 1px 1px 2px #00000088; 
+}
+
+/* Skill Buttons */
+.skill-button { 
+    min-width: 120px; 
+    flex-direction: column; 
+    padding: 8px; 
+    position: relative;
+}
+.skill-icon-placeholder { 
+    font-size: 1.5em; 
+    margin-bottom: 4px; 
+    line-height: 1; 
+}
+.skill-name-display { 
+    font-size: 0.9em; 
+    margin-bottom: 2px; 
+}
+.skill-cost-display { 
+    font-size: 0.7em; 
+    color: var(--color-text-medium); 
+}
+
+/* Mastery-related styling */
+.mastery-skill-button {
+    background-color: #8a2be2;
+    border-color: #6a0dad;
+    position: relative;
+}
+
+.mastery-skill-button:hover:not(:disabled) {
+    background-color: #9b59b6;
+    box-shadow: 0 0 10px #8a2be2;
+}
+
+.mastery-skill-button::before {
+    content: "★";
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: gold;
+    color: #000;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    line-height: 14px;
+}
+
+.mastery-progress-container {
+    height: 4px;
+    width: 90%;
+    background-color: rgba(0,0,0,0.3);
+    border-radius: 2px;
+    margin-top: 5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.mastery-progress-fill {
+    height: 100%;
+    background-color: #ffcc00;
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+.mastery-progress-text {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 0.6em;
+    color: rgba(255,255,255,0.8);
+    line-height: 4px;
+}
+
+/* Action button types */
+.shop-btn { 
+    background-color: var(--color-accent-gold); 
+    border-color: #d4ac0d; 
+}
+.shop-btn:hover:not(:disabled) { 
+    background-color: #f5c542; 
+}
+.rune-swap-btn { 
+    background-color: var(--color-accent-rune-swap); 
+    border-color: #8e44ad;
+}
+.rune-swap-btn:hover:not(:disabled) { 
+    background-color: #ab68bc;
+}
+.inventory-btn { 
+    background-color: var(--color-accent-inventory); 
+    border-color: #b7950b; 
+    color: #fff8dc;
+}
+.inventory-btn:hover:not(:disabled) { 
+    background-color: #f1c40f; 
+    color: #654321;
+}
+.battle-btn { 
+    background-color: #e74c3c; 
+    border-color: #c0392b; 
+    color: #fff;
+}
+.battle-btn:hover:not(:disabled) { 
+    background-color: #ff5e52; 
+    text-shadow: 0 0 5px #fff;
+}
+/* --- Area Selection Screen --- */
+#area-selection-screen .area-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    max-width: 1000px;
+    margin: 20px auto;
+}
+
+.area-card {
+    background-color: var(--color-bg-panel-deep);
+    border: 3px solid var(--color-border-highlight);
+    border-radius: var(--border-radius-medium);
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.area-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+}
+
+.safe-area {
+    border-color: var(--color-accent-green);
+}
+
+.danger-area {
+    border-color: var(--color-accent-red);
+}
+
+.area-image {
+    height: 120px;
+    background-size: cover;
+    background-position: center;
+}
+
+.area-info {
+    padding: 15px;
+}
+
+.area-name {
+    color: var(--color-accent-gold);
+    margin-bottom: 8px;
+    font-size: 1.2em;
+}
+
+.area-description {
+    color: var(--color-text-medium);
+    font-size: 0.8em;
+    margin-bottom: 12px;
+}
+
+.area-details {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.level-recommended {
+    background-color: var(--color-bg-dark);
+    padding: 3px 8px;
+    border-radius: var(--border-radius-small);
+    font-size: 0.8em;
+}
+
+.area-element {
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
+.town-label {
+    background-color: var(--color-accent-green);
+    color: var(--color-bg-dark);
+    padding: 3px 8px;
+    border-radius: var(--border-radius-small);
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
+/* Town Mode */
+.town-mode #monster-sprite-area {
+    background-image: url('https://placehold.co/240x240/7B9E89/FFFFFF?text=TOWN&font=pressstart2p');
+    background-size: cover;
+    background-position: center;
+}
+
+.town-mode #monster-sprite {
+    opacity: 0.3;
+}
+/* --- Modals (Shop, Inventory, etc.) --- */
+.modal { 
+    display: none; 
+    position: fixed; 
+    z-index: 1000; 
+    left: 0; 
+    top: 0; 
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0,0,0,0.8); 
+    justify-content: center; 
+    align-items: center; 
+    padding: 20px; 
+}
+.modal-content-wrapper { 
+    background-color: var(--color-bg-panel); 
+    padding: 20px; 
+    border: 4px solid var(--color-border-panel); 
+    border-radius: var(--border-radius-large); 
+    width: 90%; 
+    max-width: 700px; 
+    box-shadow: var(--shadow-strong); 
+    text-align: center; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 15px; 
+}
+.modal-header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    border-bottom: 2px dashed var(--color-border-highlight); 
+    padding-bottom: 10px; 
+}
+.modal-header h2 { 
+    color: var(--color-accent-gold); 
+    font-size: clamp(1.3em, 3vw, 1.6em); 
+    text-shadow: 1px 1px #000; 
+    margin: 0; 
+}
+.close-button { 
+    background: none; 
+    border: none; 
+    color: var(--color-text-medium); 
+    font-size: 28px; 
+    font-weight: bold; 
+    font-family: Arial, sans-serif; 
+    cursor: pointer; 
+    padding: 0 5px; 
+    line-height: 1; 
+}
+.close-button:hover { 
+    color: var(--color-text-light); 
+}
+.modal-body { 
+    font-size: clamp(0.9em, 2.2vw, 1em); 
+    color: var(--color-text-medium); 
+    min-height: 150px; 
+    text-align: left; 
+}
+.modal-footer { 
+    border-top: 2px dashed var(--color-border-highlight); 
+    padding-top: 15px; 
+}
+
+/* Shop Specific Styles */
+.shop-gold-display { 
+    text-align: right; 
+    margin-bottom: 15px; 
+    font-size: 0.9em; 
+    color: var(--color-accent-gold); 
+    border-bottom: 1px solid var(--color-border-panel); 
+    padding-bottom: 5px; 
+}
+.shop-category-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin: 10px 0;
+}
+.shop-tab {
+    background-color: var(--color-bg-panel-deep);
+    border: 1px solid var(--color-border-highlight);
+    border-radius: var(--border-radius-small);
+    padding: 5px 10px;
+    font-size: 0.8em;
+    cursor: pointer;
+}
+.shop-tab.active {
+    background-color: var(--color-accent-gold);
+    color: #000;
+    font-weight: bold;
+}
+#shop-items-container, #unlocked-runes-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 10px;
+    max-height: 40vh;
+    overflow-y: auto;
+    padding: 10px;
+    background-color: rgba(0,0,0,0.1);
+    border-radius: var(--border-radius-small);
+}
+.shop-item, .rune-swap-choice {
+    background-color: var(--color-bg-panel-deep);
+    border: 2px solid var(--color-border-highlight);
+    border-radius: var(--border-radius-medium);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.shop-item:hover, .rune-swap-choice:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+.shop-item-icon, .rune-swap-choice .rune-icon { 
+    font-size: 2.5em; 
+    margin-bottom: 8px;
+    width: 64px; 
+    height: 64px;
+    object-fit: contain;
+}
+.shop-item-name, .rune-swap-choice-name {
+    font-size: 1em;
+    color: var(--color-text-light);
+}
+.shop-item-description {
+    font-size: 0.75em;
+    color: var(--color-text-medium);
+    flex-grow: 1;
+    margin-bottom: 5px;
+}
+.shop-item-cost {
+    font-size: 0.9em;
+    color: var(--color-accent-gold);
+    font-weight: bold;
+}
+.shop-item .action-button, .rune-swap-choice .action-button { 
+    font-size: 0.8em;
+    padding: 8px 12px;
+    width: 80%;
+    margin-top: auto;
+}
+/* --- Inventory and Equipment Styles --- */
+#inventory-modal .inventory-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 10px;
+    background-color: var(--color-bg-panel-deep);
+    border-radius: var(--border-radius-small);
+    margin-bottom: 15px;
+}
+
+.inventory-item {
+    background-color: var(--color-bg-panel);
+    border: 1px solid var(--color-border-highlight);
+    border-radius: var(--border-radius-small);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.inventory-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+}
+
+.inventory-item-icon {
+    font-size: 1.5em;
+    margin-bottom: 5px;
+}
+
+.inventory-item-name {
+    font-size: 0.9em;
+    margin-bottom: 3px;
+    color: var(--color-text-light);
+}
+
+.inventory-item-quantity {
+    font-size: 0.8em;
+    color: var(--color-accent-gold);
+    margin-bottom: 8px;
+}
+
+.equipment-slot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    margin-bottom: 8px;
+    background-color: var(--color-bg-panel-deep);
+    border: 1px solid var(--color-border-highlight);
+    border-radius: var(--border-radius-small);
+}
+
+.equipment-slot-label {
+    font-size: 0.9em;
+    color: var(--color-text-medium);
+}
+
+.equipment-slot-item {
+    font-size: 0.9em;
+    color: var(--color-text-light);
+    font-weight: bold;
+}
+
+.equipped-item {
+    border-color: var(--color-accent-gold);
+    background-color: rgba(249, 168, 37, 0.1);
+}
+
+/* Rune Swap Specific Styles */
+.current-rune-display {
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 15px;
+    background-color: var(--color-bg-panel-deep);
+    border-radius: var(--border-radius-small);
+}
+.rune-name-display {
+    color: var(--color-accent-gold);
+    font-size: 1.2em;
+}
+.rune-element-details {
+    font-size: 0.7em;
+    color: var(--color-text-medium);
+    margin: 5px 0;
+    text-align: left;
+    width: 100%;
+}
+.element-strength span, .element-weakness span {
+    font-weight: bold;
+    color: var(--color-text-light);
+}
+.element-strength {
+    margin-bottom: 3px;
+}
+
+/* Level Up Modal */
+.level-up-modal-content {
+    background-color: var(--color-bg-panel);
+    border-color: var(--color-accent-gold);
+}
+.level-up-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+.level-up-announcement {
+    font-size: 1.5em;
+    color: var(--color-accent-gold);
+    text-shadow: 0 0 10px rgba(249, 168, 37, 0.5);
+    animation: levelUpPulse 2s infinite;
+}
+@keyframes levelUpPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+.level-up-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    padding: 15px;
+    background-color: var(--color-bg-panel-deep);
+    border-radius: var(--border-radius-medium);
+    width: 100%;
+}
+.level-up-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.level-up-stat-label {
+    font-size: 0.9em;
+    color: var(--color-text-medium);
+    margin-bottom: 5px;
+}
+.level-up-stat-change {
+    font-size: 1.1em;
+}
+.old-stat {
+    color: var(--color-text-dark);
+}
+.new-stat {
+    color: var(--color-accent-green);
+    font-weight: bold;
+}
+.mastery-skill-unlock {
+    width: 100%;
+    padding: 15px;
+    background-color: rgba(138, 43, 226, 0.3);
+    border: 2px solid #8a2be2;
+    border-radius: var(--border-radius-medium);
+    text-align: center;
+}
+.mastery-skill-unlock h3 {
+    color: #e0b0ff;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+.new-skill-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+.new-skill-icon {
+    font-size: 2em;
+    margin: 5px 0;
+}
+.new-skill-name {
+    font-size: 1.1em;
+    color: #e0b0ff;
+    font-weight: bold;
+}
+.new-skill-desc {
+    font-size: 0.8em;
+    color: var(--color-text-light);
+}
+/* --- Visual Effects and Animations --- */
+/* Floating Combat Text */
+@keyframes floatingText {
+    0% { opacity: 0; transform: translateY(0); }
+    10% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(-30px); }
+}
+
+.floating-text {
+    position: absolute;
+    animation: floatingText 1.5s forwards;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px #000, -1px -1px 2px #000, 1px -1px 2px #000, -1px 1px 2px #000;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.floating-damage {
+    color: #ff4d4d; /* Red for damage */
+}
+
+.floating-heal {
+    color: #4aff4a; /* Green for healing */
+}
+
+.floating-buff {
+    color: #4a4aff; /* Blue for buffs */
+}
+
+.floating-debuff {
+    color: #ffff4a; /* Yellow for debuffs */
+}
+
+/* Combat Animations */
+@keyframes damageShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+@keyframes healPulse {
+    0%, 100% { transform: scale(1); filter: brightness(1); }
+    50% { transform: scale(1.05); filter: brightness(1.2); }
+}
+
+@keyframes buffFlash {
+    0%, 100% { filter: brightness(1); }
+    50% { transform: scale(1.03); filter: brightness(1.3); }
+}
+
+.damage-animation {
+    animation: damageShake 0.3s ease;
+}
+
+.heal-animation {
+    animation: healPulse 0.5s ease;
+}
+
+.buff-animation {
+    animation: buffFlash 0.5s ease;
+}
+
+/* AOE Effect Animation */
+@keyframes aoeEffect {
+    0% { transform: scale(0); opacity: 0; }
+    50% { transform: scale(1); opacity: 0.7; }
+    100% { transform: scale(1.5); opacity: 0; }
+}
+
+.aoe-effect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+    z-index: 5;
+    pointer-events: none;
+    animation: aoeEffect 1s ease-out forwards;
+}
+
+/* Shield Effect */
+.shield-effect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 4px solid rgba(135, 206, 250, 0.7);
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(135, 206, 250, 0.7);
+    z-index: 2;
+    pointer-events: none;
+    animation: shieldPulse 2s infinite;
+}
+
+@keyframes shieldPulse {
+    0%, 100% { opacity: 0.7; transform: scale(1); }
+    50% { opacity: 0.9; transform: scale(1.05); }
+}
+/* --- Error Logging Display --- */
+.error-log { 
+    display: none; 
+    position: fixed; 
+    bottom: 0; 
+    left: 0; 
+    width: 100%; 
+    background-color: var(--color-error-bg); 
+    border-top: 2px solid var(--color-error-text); 
+    padding: 10px 15px; 
+    font-size: 0.9em; 
+    color: var(--color-error-text); 
+    z-index: 2000; 
+    text-align: left; 
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.3); 
+    transition: all 0.3s ease; 
+}
+
+.error-log.active-error { 
+    display: block; 
+}
+
+.error-log.expanded { 
+    height: auto; 
+    max-height: 50vh; 
+    overflow-y: auto; 
+}
+
+.error-log-title { 
+    font-weight: bold; 
+    margin-right: 5px; 
+}
+
+.error-close-button { 
+    position: absolute; 
+    right: 10px; 
+    top: 10px; 
+    background: none; 
+    border: none; 
+    color: var(--color-error-text); 
+    font-size: 20px; 
+    cursor: pointer; 
+}
+
+.error-expand-button { 
+    background-color: #ffaaaa; 
+    color: #800000; 
+    border: 1px solid #800000; 
+    border-radius: 3px; 
+    padding: 2px 8px; 
+    margin-left: 10px; 
+    cursor: pointer; 
+    font-size: 0.8em; 
+}
+
+.error-details { 
+    margin-top: 10px; 
+    padding: 10px; 
+    background-color: #fff; 
+    border: 1px solid #800000; 
+    border-radius: 3px; 
+}
+
+.error-stack { 
+    margin: 0; 
+    white-space: pre-wrap; 
+    font-family: monospace; 
+    font-size: 0.9em; 
+    color: #800000; 
+}
+
+#error-history-button { 
+    position: fixed; 
+    bottom: 10px; 
+    right: 10px; 
+    background-color: var(--color-bg-panel); 
+    color: var(--color-text-light); 
+    border: 2px solid var(--color-border-highlight); 
+    border-radius: var(--border-radius-small); 
+    padding: 5px 10px; 
+    font-size: 0.8em; 
+    cursor: pointer; 
+    z-index: 1000; 
+    display: none; 
+}
+
+#error-history-button.has-errors { 
+    display: block; 
+}
+
+.error-history-list { 
+    max-height: 400px; 
+    overflow-y: auto; 
+    padding: 10px; 
+    background-color: rgba(0,0,0,0.1); 
+    border-radius: var(--border-radius-small); 
+}
+
+.error-history-item { 
+    background-color: var(--color-error-bg); 
+    border: 1px solid var(--color-error-text); 
+    border-radius: var(--border-radius-small); 
+    margin-bottom: 10px; 
+    padding: 10px; 
+}
+
+.error-history-header { 
+    display: flex; 
+    justify-content: space-between; 
+    margin-bottom: 5px; 
+    font-size: 0.9em; 
+    color: #800000; 
+}
+
+.error-history-message { 
+    font-weight: bold; 
+    margin-bottom: 10px; 
+    color: var(--color-error-text); 
+}
+
+.error-history-toggle { 
+    background-color: #ffaaaa; 
+    color: #800000; 
+    border: 1px solid #800000; 
+    border-radius: 3px; 
+    padding: 2px 8px; 
+    cursor: pointer; 
+    font-size: 0.8em; 
+    margin-bottom: 5px; 
+}
+
+.error-history-details { 
+    margin: 5px 0 0; 
+    padding: 5px; 
+    background-color: #fff; 
+    border: 1px solid #d88; 
+    border-radius: 3px; 
+    white-space: pre-wrap; 
+    font-family: monospace; 
+    font-size: 0.9em; 
+    color: #800000; 
+}
+/* --- Scrollbar and Responsive Styling --- */
+/* Scrollbar Styling */
+::-webkit-scrollbar { width: 12px; }
+::-webkit-scrollbar-track { background: #121222; border-radius: var(--border-radius-small); }
+::-webkit-scrollbar-thumb { background: var(--color-border-highlight); border-radius: var(--border-radius-small); border: 2px solid #121222; }
+::-webkit-scrollbar-thumb:hover { background: #8a8aaa; }
+
+/* Responsive Adjustments */
+@media (max-width: 767px) {
+    body { padding: 5px; } 
+    .screen { padding: 15px; }
+    #top-bar { flex-direction: column; gap: 8px; text-align: center; }
+    #main-content-area { flex-direction: column; }
+    #left-panel, #center-panel, #right-panel { order: 0 !important; }
+    #center-panel { order: 1; } 
+    #left-panel { order: 2; } 
+    #right-panel { order: 3; }
+    .character-name { font-size: 1.2em !important; }
+    .stat-bar-container { font-size: 0.8em; } 
+    .stat-label { width: 30px; } 
+    .stat-value { min-width: 55px; }
+    #game-log { font-size: 0.7em; }
+    #combat-actions-container { flex-direction: column; align-items: stretch; }
+    #skill-buttons-area, #other-actions-area { width: 100%; justify-content: center; }
+    .action-button { font-size: 0.85em; padding: 10px; }
+    .skill-button { min-width: 100px; }
+    .modal-content-wrapper { width: 95%; padding: 15px; }
+    .modal-header h2 { font-size: 1.2em; }
+    #shop-items-container, #unlocked-runes-container { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+    .level-up-stats { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+    .rune-options { max-width: 100%; }
+    .rune-button { 
+        min-width: calc(50% - 15px); 
+        max-width: calc(50% - 15px); 
+        font-size: 0.75em; 
+    }
+    .rune-button .rune-icon { width: 50px; height: 50px; }
+    .game-title-small { font-size: 1em; } 
+    #player-info { 
+        font-size: 0.75em;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .info-badge {
+        margin-bottom: 5px;
+    }
+    .stat-bar { height: calc(var(--stat-bar-height) * 0.9); }
+    .exp-bar { height: calc(var(--stat-bar-height) * 0.7); }
+    .error-log { font-size: 0.75em; padding: 5px 10px; }
+    #shop-items-container, #unlocked-runes-container { grid-template-columns: 1fr; }
+    #skill-buttons-area {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 5px;
+    }
+    .skill-button {
+        min-width: auto;
+        width: 100%;
+    }
+    #other-actions-area {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 5px;
+    }
+}
+
+/* Elemental type styling */
+.type-badge {
+    position: relative;
+    padding-left: 24px;
+}
+
+.type-badge::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background-color: var(--color-bg-dark);
+}
+.type-badge[data-type="Fire"]::before {
+    background-color: #FF6347;
+}
+
+.type-badge[data-type="Water"]::before {
+    background-color: #4682B4;
+}
+
+.type-badge[data-type="Nature"]::before {
+    background-color: #3CB371;
+}
+
+.type-badge[data-type="Light"]::before {
+    background-color: #FFFACD;
+}
+
+.type-badge[data-type="Dark"]::before {
+    background-color: #4B0082;
+}
+
+.type-badge[data-type="Earth"]::before {
+    background-color: #8B4513;
+}
+
+.type-badge[data-type="Ice"]::before {
+    background-color: #E0FFFF;
+}
+
+.type-badge[data-type="Lightning"]::before {
+    background-color: #FFD700;
+}
+
+.type-badge[data-type="Normal"]::before {
+    background-color: #A9A9A9;
+}
+/* Combat effectiveness indicators */
+.super-effective-indicator,
+.not-effective-indicator {
+    padding: 2px 8px;
+    border-radius: var(--border-radius-small);
+    display: inline-block;
+    margin-bottom: 5px;
+    font-size: 0.8em;
+    animation: fadeInOut 1.5s;
+}
+
+.super-effective-indicator {
+    background-color: #ff6b6b;
+    color: white;
+}
+
+.not-effective-indicator {
+    background-color: #339af0;
+    color: white;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translateY(-10px); }
+    20% { opacity: 1; transform: translateY(0); }
+    80% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* Enhanced battle animations */
+@keyframes damageShake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-7px) rotate(-3deg); }
+    40% { transform: translateX(7px) rotate(3deg); }
+    60% { transform: translateX(-7px) rotate(-3deg); }
+    80% { transform: translateX(5px) rotate(2deg); }
+}
+
+@keyframes healPulse {
+    0%, 100% { transform: scale(1); filter: brightness(1); }
+    50% { transform: scale(1.08); filter: brightness(1.3) hue-rotate(15deg); }
+}
+
+@keyframes buffFlash {
+    0%, 100% { filter: brightness(1); }
+    25% { filter: brightness(1.5) saturate(1.5); }
+    50% { transform: scale(1.05); filter: brightness(1.3) contrast(1.2); }
+    75% { filter: brightness(1.5) saturate(1.5); }
+}
+
+.damage-animation {
+    animation: damageShake 0.5s ease;
+}
+
+.heal-animation {
+    animation: healPulse 0.8s ease;
+}
+
+.buff-animation {
+    animation: buffFlash 0.8s ease;
+}
+/* Shop tab styling */
+.shop-category-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 15px 0;
+    flex-wrap: wrap;
+}
+
+.shop-tab {
+    background-color: var(--color-bg-panel-deep);
+    border: 1px solid var(--color-border-highlight);
+    border-radius: var(--border-radius-small);
+    padding: 8px 12px;
+    font-size: 0.85em;
+    cursor: pointer;
+    font-family: var(--font-primary);
+    transition: all 0.2s ease;
+}
+
+.shop-tab:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.shop-tab.active {
+    background-color: var(--color-accent-gold);
+    color: #000;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Shop item category styling */
+.shop-item[data-type="consumable"] {
+    border-left: 3px solid #4aff4a;
+}
+
+.shop-item[data-type="weapon"] {
+    border-left: 3px solid #ff4d4d;
+}
+
+.shop-item[data-type="shield"] {
+    border-left: 3px solid #4a4aff;
+}
+
+.shop-item[data-type="armor"] {
+    border-left: 3px solid #ffff4a;
+}
+
+.shop-item[data-type="accessory"] {
+    border-left: 3px solid #ff4aff;
+}
+/* Level up modal improvements */
+.level-up-modal-content {
+    background-color: var(--color-bg-panel);
+    border-color: var(--color-accent-gold);
+    box-shadow: 0 0 25px rgba(249, 168, 37, 0.5);
+}
+
+.level-up-announcement {
+    font-size: 1.8em;
+    color: var(--color-accent-gold);
+    text-shadow: 0 0 10px rgba(249, 168, 37, 0.5), 0 0 20px rgba(249, 168, 37, 0.3);
+    margin-bottom: 20px;
+    text-align: center;
+    animation: levelUpPulse 2s infinite;
+}
+
+@keyframes levelUpPulse {
+    0%, 100% { transform: scale(1); text-shadow: 0 0 10px rgba(249, 168, 37, 0.5), 0 0 20px rgba(249, 168, 37, 0.3); }
+    50% { transform: scale(1.1); text-shadow: 0 0 15px rgba(249, 168, 37, 0.7), 0 0 30px rgba(249, 168, 37, 0.5); }
+}
+
+.level-up-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 20px;
+    background-color: var(--color-bg-panel-deep);
+    border-radius: var(--border-radius-medium);
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.level-up-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    border-radius: var(--border-radius-small);
+}
+
+.level-up-stat-label {
+    font-size: 1.1em;
+    color: var(--color-text-medium);
+    margin-bottom: 8px;
+}
+
+.level-up-stat-change {
+    font-size: 1.3em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.old-stat {
+    color: var(--color-text-dark);
+}
+
+.new-stat {
+    color: var(--color-accent-green);
+    font-weight: bold;
+    animation: statIncrease 1s;
+}
+
+@keyframes statIncrease {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
